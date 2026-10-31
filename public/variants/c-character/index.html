@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Paytm · Bolo · c-character</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css?v=152311"><link rel="stylesheet" href="variant.css?v=1793440183">
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <button class="backbtn" data-go="home" aria-label="Back"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="avatar" data-go="profile">UJ</button>
+    <div class="brand"><div class="promo">Pay using Paytm <span class="concept">concept demo</span></div><div class="promo2">Win 1g Gold every hour <span class="redarrow">›</span></div></div>
+    <div id="title"></div>
+    <div class="top-icons"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4zM10 21h4"/></svg><span class="helplink" data-go="help">Help</span></div>
+  </header>
+  <main id="screen"></main>
+  <div id="stage" aria-hidden="true"></div>
+  <button id="scanqr" data-go="home"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2z"/></svg> Scan QR</button>
+  <button id="askchip" type="button">Bolo se poochho… <span>type karein</span></button>
+  <div id="saathi">
+    <div id="bubble" hidden>
+      <button id="bclose" type="button" aria-label="Close">×</button>
+      <div id="heard"></div>
+      <div id="said"></div>
+      <button id="kbd" type="button">⌨ Type instead</button>
+      <form id="typed" hidden><input id="typein" placeholder="Type to Bolo…" autocomplete="off"><button aria-label="Send">➤</button></form>
+    </div>
+    <button id="mascot" aria-label="Talk to Bolo">
+      <svg viewBox="0 0 120 130" class="bolo">
+        <defs>
+          <radialGradient id="cg" cx="34%" cy="26%" r="80%"><stop offset="0" stop-color="#8BE6FF"/><stop offset=".45" stop-color="#00BAF2"/><stop offset="1" stop-color="#0B63C9"/></radialGradient>
+          <linearGradient id="cb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+        </defs>
+        <g class="rig">
+          <g class="dots"><circle cx="92" cy="14" r="4"/><circle cx="104" cy="8" r="5"/><circle cx="116" cy="2" r="6"/></g>
+          <g class="antenna"><path d="M60 22 Q58 12 64 6" stroke="#002E6E" stroke-width="3" fill="none" stroke-linecap="round"/><circle class="coin" cx="65" cy="6" r="5.5" fill="#FFC531" stroke="#E09A00" stroke-width="1.5"/></g>
+          <ellipse cx="44" cy="122" rx="11" ry="5" fill="#002E6E"/><ellipse cx="76" cy="122" rx="11" ry="5" fill="#002E6E"/>
+          <g class="arm-r"><path d="M98 76 q14 -2 16 -16" stroke="#0B63C9" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="114" cy="58" r="7" fill="#00BAF2"/></g>
+          <path class="body" d="M60 20c27 0 44 19 44 48 0 30-18 52-44 52S16 98 16 68c0-29 17-48 44-48z" fill="url(#cg)"/>
+          <ellipse cx="46" cy="36" rx="16" ry="8" fill="url(#cb)" transform="rotate(-18 46 36)"/>
+          <g class="arm-l"><path d="M22 78 q-14 0 -18 12" stroke="#0B63C9" stroke-width="9" fill="none" stroke-linecap="round"/><circle cx="4" cy="91" r="7" fill="#00BAF2"/><path class="finger" d="M-1 89 l-9 -4" stroke="#00BAF2" stroke-width="5" stroke-linecap="round"/></g>
+          <g class="headset"><path d="M18 62 C18 22 102 22 102 62" stroke="#002E6E" stroke-width="5" fill="none"/><rect x="10" y="56" width="12" height="20" rx="6" fill="#002E6E"/><rect x="98" y="56" width="12" height="20" rx="6" fill="#002E6E"/><path d="M16 74 q2 18 26 20" stroke="#002E6E" stroke-width="3" fill="none"/><circle cx="44" cy="94" r="4" fill="#00BAF2"/></g>
+          <g class="brows"><path class="bl" d="M36 44 l14 -3" stroke="#002E6E" stroke-width="3.5" stroke-linecap="round"/><path class="br" d="M70 41 l14 3" stroke="#002E6E" stroke-width="3.5" stroke-linecap="round"/></g>
+          <g class="eyes"><ellipse cx="45" cy="60" rx="10" ry="12" fill="#fff"/><ellipse cx="75" cy="60" rx="10" ry="12" fill="#fff"/>
+            <g class="pupils"><circle cx="46" cy="62" r="6" fill="#002E6E"/><circle cx="76" cy="62" r="6" fill="#002E6E"/><circle cx="48.5" cy="59" r="2" fill="#fff"/><circle cx="78.5" cy="59" r="2" fill="#fff"/></g></g>
+          <g class="eyes-happy"><path d="M36 62 q9 -12 18 0" stroke="#002E6E" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M66 62 q9 -12 18 0" stroke="#002E6E" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+          <path class="m-smile" d="M50 82 Q60 91 70 82" stroke="#002E6E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <path class="m-grin" d="M44 80 Q60 100 76 80 Z" fill="#002E6E"/>
+          <path class="m-frown" d="M51 89 Q60 81 69 89" stroke="#002E6E" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+          <g class="m-open"><ellipse cx="60" cy="86" rx="8" ry="7" fill="#002E6E"/><ellipse cx="60" cy="90" rx="5" ry="2.6" fill="#00BAF2"/></g>
+        </g>
+      </svg>
+    </button>
+  </div>
+  <div id="confetti" aria-hidden="true"></div>
+
+  <div id="confirm" hidden>
+    <div class="sheet">
+      <svg class="peek" viewBox="0 0 120 56" aria-hidden="true"><path d="M16 56c0-30 18-50 44-50s44 20 44 50z" fill="#00BAF2"/><ellipse cx="45" cy="34" rx="9" ry="11" fill="#fff"/><ellipse cx="75" cy="34" rx="9" ry="11" fill="#fff"/><circle cx="46" cy="38" r="5.5" fill="#002E6E"/><circle cx="76" cy="38" r="5.5" fill="#002E6E"/><circle cx="48" cy="35" r="1.8" fill="#fff"/><circle cx="78" cy="35" r="1.8" fill="#fff"/><ellipse cx="22" cy="54" rx="10" ry="7" fill="#0B63C9"/><ellipse cx="98" cy="54" rx="10" ry="7" fill="#0B63C9"/></svg>
+      <div class="ctitle">Confirm karein?</div>
+      <div id="cwhat"></div>
+      <div class="cnote">Aapke "haan" ke bina Bolo kuch nahi karega</div>
+      <div class="cbtns"><button id="cno">Nahi</button><button id="cyes">Haan, kar do</button></div>
+    </div>
+  </div>
+  <div id="pin" hidden>
+    <div class="sheet">
+      <svg class="peek shy" viewBox="0 0 120 56" aria-hidden="true"><path d="M16 56c0-30 18-50 44-50s44 20 44 50z" fill="#00BAF2"/><ellipse cx="45" cy="36" rx="14" ry="10" fill="#0B63C9"/><ellipse cx="75" cy="36" rx="14" ry="10" fill="#0B63C9"/><path d="M52 50 q8 4 16 0" stroke="#002E6E" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      <div class="ctitle">Paytm UPI PIN <span class="demo">demo</span></div>
+      <div id="pinwhat"></div>
+      <div class="cnote">Bolo dekh nahi raha: PIN sirf aap daalte ho</div>
+      <div id="pad"></div>
+    </div>
+  </div>
+  <button id="logbtn" title="Action log">⚙</button>
+  <div id="log" hidden></div>
+</div>
+<script src="app.js?v=152311"></script><script src="variant.js?v=1793440183"></script>
+</body>
+</html>

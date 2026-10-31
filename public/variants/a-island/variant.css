@@ -1,0 +1,85 @@
+/* Variant A "Island". Palette sampled from real Paytm screens: button navy #004299, logo navy #002E6E,
+   sky stripe #00B7F5, page #F5F5F7, success #21C179. Bolo = a calm navy island, not a floating character. */
+:root { --p-navy:#002E6E; --p-btn:#004299; --p-sky:#00B7F5; --p-bg:#F5F5F7; --p-ok:#21C179; --isl:#08142E; }
+html { scroll-padding-top:150px; }
+body, button, input { font-family:Inter, -apple-system, Roboto, sans-serif; }
+#saathi { display:none !important; }   /* replaced by the island; kept in DOM because app.js binds it */
+
+/* reserved strip: Bolo owns this band, so it can never sit on a tile, amount or button */
+#sbar { position:sticky; top:0; z-index:8; height:36px; display:flex; align-items:center; justify-content:space-between; padding:0 22px; background:var(--p-bg); font:600 14px Inter, sans-serif; color:#111; }
+body.s-loan #sbar, body.s-txn #sbar, body.s-pay #sbar { background:#fff; }
+#sbar .sb-r { display:flex; align-items:center; gap:5px; font-size:12px; }
+#sbar svg { width:17px; height:12px; }
+.batt { width:22px; height:11px; border:1.5px solid #111; border-radius:3px; padding:1px; display:inline-block; }
+.batt i { display:block; width:75%; height:100%; background:#111; border-radius:1px; }
+#top { top:36px; }
+
+#island { position:fixed; z-index:35; top:4px; left:50%; transform:translateX(-50%); background:var(--isl); color:#fff; border-radius:16px;
+  width:136px; overflow:hidden; box-shadow:0 0 0 0 rgba(0,0,0,0); transition:width .45s cubic-bezier(.3,1.25,.4,1), border-radius .45s, box-shadow .3s; }
+#island .isl-row { all:unset; box-sizing:border-box; display:flex; align-items:center; gap:8px; width:100%; height:28px; padding:0 10px; cursor:pointer; }
+.isl-mark { width:18px; height:18px; border-radius:50%; background:var(--p-btn); display:flex; align-items:center; justify-content:center; gap:1.5px; flex:none; }
+.isl-mark i { width:2px; border-radius:2px; background:var(--p-sky); height:6px; }
+.isl-mark i:nth-child(2) { height:10px; background:#fff; }
+.isl-status { flex:1; font:600 12px Inter, sans-serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.isl-wave, .isl-kbd { display:none; }
+.isl-body { max-height:0; opacity:0; transition:max-height .45s ease, opacity .3s; }
+#island.compact.done .isl-status { color:var(--p-ok); }
+
+#island.open { width:min(392px, calc(100% - 20px)); border-radius:26px; box-shadow:0 12px 32px rgba(0,20,60,.35); }
+#island.open .isl-row { height:46px; padding:0 14px; }
+#island.open .isl-mark { width:26px; height:26px; }
+#island.open .isl-mark i { height:8px; width:2.5px; } #island.open .isl-mark i:nth-child(2) { height:13px; }
+#island.open .isl-status { font-size:15px; }
+#island.open .isl-kbd { display:block; font-size:16px; opacity:.6; padding:4px; }
+#island.open .isl-body { max-height:340px; opacity:1; padding:0 16px 14px; }
+#island.listen .isl-wave, #island.speak .isl-wave { display:flex; align-items:center; gap:3px; height:22px; }
+.isl-wave i { width:3px; height:6px; border-radius:2px; background:var(--p-sky); animation:wv .9s ease-in-out infinite; }
+.isl-wave i:nth-child(2n) { animation-delay:-.3s; background:#fff; } .isl-wave i:nth-child(3n) { animation-delay:-.6s; }
+#island.speak .isl-wave i { animation-duration:1.4s; }
+@keyframes wv { 50% { height:20px; } }
+#island.think .isl-status, #island.work .isl-status { animation:pulse 1.2s ease-in-out infinite; }
+@keyframes pulse { 50% { opacity:.55; } }
+.isl-heard { font-size:13px; color:#9FB0CE; font-style:italic; margin-bottom:6px; }
+.isl-heard:empty { display:none; }
+.isl-steps { list-style:none; margin:4px 0 8px; padding:0; display:grid; gap:7px; }
+.isl-steps:empty { display:none; }
+.isl-steps li { position:relative; padding-left:28px; font-size:14px; line-height:20px; color:#fff; animation:stepin .35s ease both; }
+.isl-steps li::before { content:''; position:absolute; left:0; top:1px; width:18px; height:18px; border-radius:50%; border:2px solid rgba(0,183,245,.35); border-top-color:var(--p-sky); box-sizing:border-box; animation:spin .8s linear infinite; }
+.isl-steps li.ok::before { content:'✓'; animation:none; border:0; background:var(--p-ok); color:#fff; font:700 11px/18px Inter; text-align:center; }
+.isl-steps li.no::before { content:'✕'; animation:none; border:0; background:#E5484D; color:#fff; font:700 11px/18px Inter; text-align:center; }
+.isl-steps li.wait { color:#FFD58A; } .isl-steps li.wait::before { border-color:rgba(255,213,138,.4); border-top-color:#FFD58A; }
+@keyframes spin { to { transform:rotate(360deg); } }
+@keyframes stepin { from { opacity:0; transform:translateY(-4px); } }
+.isl-said { font-size:15px; line-height:1.45; color:#fff; border-top:1px solid rgba(255,255,255,.12); padding-top:8px; }
+.isl-said:empty { display:none; }
+.isl-type { display:flex; gap:8px; margin-top:10px; }
+.isl-type[hidden] { display:none; }
+.isl-type input { flex:1; border:0; border-radius:20px; padding:10px 14px; font-size:15px; background:#1B2A4A; color:#fff; outline:none; }
+.isl-type button { border:0; border-radius:50%; width:40px; background:var(--p-sky); color:var(--isl); font-weight:700; }
+
+/* ghost finger: an iOS-style touch indicator, big enough to read on a projector */
+#finger { position:fixed; left:0; top:0; z-index:40; width:52px; height:52px; pointer-events:none; opacity:0; transition:transform .75s cubic-bezier(.3,.7,.2,1), opacity .25s; }
+#finger.on { opacity:1; }
+#finger .tip { position:absolute; inset:0; border-radius:50%; background:rgba(255,255,255,.45); border:3px solid var(--p-btn); box-shadow:0 6px 18px rgba(0,40,110,.35), inset 0 0 0 6px rgba(0,183,245,.35); transition:transform .15s; }
+#finger.press .tip { transform:scale(.78); background:rgba(0,183,245,.55); }
+#finger .ring { position:absolute; inset:0; border-radius:50%; border:3px solid var(--p-sky); opacity:0; }
+#finger.press .ring { animation:ring .5s ease-out; }
+@keyframes ring { from { opacity:1; transform:scale(.6); } to { opacity:0; transform:scale(2.1); } }
+.bolo-target { outline:3px solid var(--p-sky) !important; outline-offset:2px; border-radius:16px; background:rgba(0,183,245,.12) !important; }
+
+/* Bolo's results on the real screens: Paytm's own white card with the sky receipt stripe */
+.bolo-card { background:#fff !important; border:1px solid #E6E9EF !important; border-bottom:4px solid var(--p-sky) !important; border-radius:16px !important; box-shadow:0 1px 3px rgba(0,30,80,.06) !important; }
+.bolo-tag { display:inline-flex; align-items:center; gap:6px; background:var(--isl); color:#fff !important; font:600 11px Inter !important; padding:3px 9px 3px 4px; border-radius:99px; }
+.bolo-tag .mini-bolo { width:14px !important; height:14px !important; border-radius:50%; background:var(--p-btn) !important; box-shadow:inset 0 0 0 4px var(--p-btn), inset 0 0 0 7px var(--p-sky); }
+
+/* confirm + PIN: Paytm bottom sheet, navy "Pay Securely" pill */
+#confirm .sheet, #pin .sheet { border-radius:24px 24px 0 0; padding:10px 20px 24px; }
+#confirm .sheet::before, #pin .sheet::before { content:''; display:block; width:40px; height:4px; border-radius:2px; background:#D6DAE1; margin:0 auto 16px; }
+#confirm .ctitle, #pin .ctitle { font:700 18px Inter; color:#101828; }
+#cwhat, #pinwhat { font-size:16px; color:#3B4452; margin:8px 0 18px; }
+#cyes, #pad .paynow { background:var(--p-btn) !important; color:#fff !important; border-radius:99px !important; font:600 17px Inter !important; height:52px; }
+#cno { background:#fff !important; color:var(--p-btn) !important; border:1.5px solid #C9D3E6 !important; border-radius:99px !important; height:52px; font:600 16px Inter !important; }
+#island.work .isl-said { display:none; }   /* speech shows once the work is done: smaller island while the finger operates */
+/* one Bolo mark everywhere (no cute blob): navy disc, sky voice ring — reads as a Paytm product badge */
+.mini-bolo, #confirm .ctitle::before { background:var(--p-btn) !important; box-shadow:inset 0 0 0 3px var(--p-btn), inset 0 0 0 5.5px var(--p-sky) !important; }
+html.demo-still #island, html.demo-still #finger { transition:none !important; }

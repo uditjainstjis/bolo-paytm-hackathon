@@ -1,0 +1,1 @@
+[{"name":"English loan","setup":"S.loan='rejected';go('loan')","say":["why did my loan get rejected and what should I do"]},{"name":"English bus","say":["book me a bus from Delhi to Jaipur tomorrow"]},{"name":"Hinglish still","say":["mera loan kyun reject hua"]}]

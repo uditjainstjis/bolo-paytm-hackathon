@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<meta name="theme-color" content="#ffffff">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Paytm · Bolo · d-native</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="style.css?v=152311"><link rel="stylesheet" href="variant.css?v=1793440458">
+</head>
+<body>
+<div id="app">
+  <header id="top">
+    <button class="backbtn" data-go="home" aria-label="Back"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="avatar" data-go="profile">UJ</button>
+    <div class="brand"><div class="promo">Pay using Paytm <span class="concept">concept demo</span></div><div class="promo2">Win 1g Gold every hour <span class="redarrow">›</span></div></div>
+    <div id="title"></div>
+    <div class="top-icons"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 16V11a6 6 0 0112 0v5l2 2H4zM10 21h4"/></svg><span class="helplink" data-go="help">Help</span></div>
+  </header>
+  <main id="screen"></main>
+  <div id="vbar">
+    <button id="scanqr" data-go="home"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="1"/><rect x="4" y="14" width="6" height="6" rx="1"/><path d="M14 14h2v2h-2zM18 18h2v2h-2z"/></svg><span>Scan QR</span></button>
+    <span class="vsep"></span>
+    <button id="mascot" aria-label="Talk to Bolo">
+      <svg class="glyph" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 2.5c6.6 0 11.5 4.6 11.5 10.6S20.6 23.7 14 23.7c-1.3 0-2.6-.2-3.8-.5L5 25.6l1.3-4.6C4 19 2.5 16.2 2.5 13.1 2.5 7.1 7.4 2.5 14 2.5z" fill="#00BAF2"/><rect x="8.6" y="10.4" width="2.4" height="5.4" rx="1.2" fill="#fff"/><rect x="12.8" y="7.8" width="2.4" height="10.6" rx="1.2" fill="#fff"/><rect x="17" y="10.4" width="2.4" height="5.4" rx="1.2" fill="#fff"/></svg>
+      <span class="wm"><b>bo</b><i>lo</i></span>
+      <span class="hint">Ask Bolo to pay, check or fix…</span>
+      <span class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+      <span class="vstate"></span>
+      <svg class="mic" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0013 0M12 17.5V21"/></svg>
+    </button>
+  </div>
+  <div id="saathi">
+    <div id="bubble" hidden>
+      <div class="bhead"><svg viewBox="0 0 28 28" width="18" height="18"><path d="M14 2.5c6.6 0 11.5 4.6 11.5 10.6S20.6 23.7 14 23.7c-1.3 0-2.6-.2-3.8-.5L5 25.6l1.3-4.6C4 19 2.5 16.2 2.5 13.1 2.5 7.1 7.4 2.5 14 2.5z" fill="#00BAF2"/><rect x="12.8" y="7.8" width="2.4" height="10.6" rx="1.2" fill="#fff"/><rect x="8.6" y="10.4" width="2.4" height="5.4" rx="1.2" fill="#fff"/><rect x="17" y="10.4" width="2.4" height="5.4" rx="1.2" fill="#fff"/></svg><span>Bolo</span><button id="bclose" type="button" aria-label="Close">×</button></div>
+      <div id="heard"></div>
+      <div id="said"></div>
+      <button id="kbd" type="button">Type instead</button>
+      <form id="typed" hidden><input id="typein" placeholder="Type to Bolo…" autocomplete="off"><button aria-label="Send"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg></button></form>
+    </div>
+  </div>
+
+  <div id="confirm" hidden>
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="ctitle">Confirm with Bolo</div>
+      <div id="cwhat"></div>
+      <div class="cinfo"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#21A04B" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round"/></svg>Bolo prepared this. Nothing happens until you tap Proceed.</div>
+      <div class="cbtns"><button id="cyes"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg>Proceed Securely</button><button id="cno">Cancel</button></div>
+    </div>
+  </div>
+  <div id="pin" hidden>
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="ctitle">Pay Securely <span class="demo">demo</span></div>
+      <div id="pinwhat"></div>
+      <div class="bankrow"><span class="bk">UCO</span><div><b>UCO Bank</b><small>Saving A/c •• 7369</small></div><span class="chk">✓</span></div>
+      <div class="cinfo">In the real app this is Paytm's own UPI PIN screen. Bolo never sees your PIN.</div>
+      <div id="pad"></div>
+    </div>
+  </div>
+  <button id="logbtn" title="Action log">⚙</button>
+  <div id="log" hidden></div>
+</div>
+<script src="app.js?v=152311"></script><script src="variant.js?v=1793440183"></script>
+</body>
+</html>

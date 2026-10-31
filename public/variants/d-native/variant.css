@@ -1,0 +1,121 @@
+/* Variant D "Native minimal": no cartoon. Bolo lives inside Paytm's own Scan QR pill and answers with native cards.
+   Tokens sampled from Udit's real Paytm screenshots (real_screens/udit_phone2): page #F5F5F7, card #FFFFFF, CTA #004299,
+   travel CTA #184193, ink #292929, muted #727580, info chip #DEEDFF, success chip #E8F2EA. Brand: navy #002E6E + cyan #00BAF2. */
+:root { --navy:#002E6E; --sky:#00BAF2; --cta:#004299; --ink:#292929; --muted:#727580; --bg:#F5F5F7; --line:#ECEEF2; --info:#DEEDFF; --okbg:#E8F2EA; --ok:#1E8E3E; --badbg:#FDECEC; --bad:#D93025; --warnbg:#FFF4E0; --warn:#B26A00; }
+html, body { font-family:Inter, -apple-system, "Segoe UI", Roboto, sans-serif; }
+#app { padding-bottom:104px !important; }
+
+/* ---------- the bar: "Scan QR | bolo" in the exact footprint of Paytm's own pill ---------- */
+#vbar { position:fixed; z-index:8; left:50%; transform:translateX(-50%); bottom:calc(16px + env(safe-area-inset-bottom)); display:flex; align-items:center; height:54px; border-radius:99px;
+  background:linear-gradient(180deg,#1F56C9,#0A2A7A); border:2px solid #3B7BF0; box-shadow:0 8px 20px rgba(10,42,122,.35); color:#fff; overflow:hidden; transition:width .45s cubic-bezier(.3,1,.4,1), border-radius .3s; width:286px; }
+#vbar #scanqr { position:static; transform:none; display:flex; align-items:center; gap:8px; height:100%; padding:0 14px 0 22px; font-size:18px; font-weight:600; color:#fff; background:none; border:0; box-shadow:none; white-space:nowrap; transition:opacity .2s, max-width .4s; max-width:160px; }
+#vbar .vsep { width:1px; height:26px; background:rgba(255,255,255,.35); flex:none; transition:opacity .2s; }
+#vbar #mascot { all:unset; box-sizing:border-box; cursor:pointer; flex:1; height:100%; display:flex; align-items:center; gap:7px; padding:0 18px 0 14px; position:relative; min-width:0; }
+#mascot .glyph { width:26px; height:26px; flex:none; transition:transform .3s; }
+#mascot .wm { font-size:19px; font-weight:800; letter-spacing:-.03em; } #mascot .wm b { color:#fff; font-weight:800; } #mascot .wm i { font-style:normal; color:#00BAF2; }
+#mascot .hint, #mascot .wave, #mascot .vstate, #mascot .mic { display:none; }
+#mascot .wave { align-items:center; gap:3px; height:26px; }
+#mascot .wave i { width:3px; border-radius:2px; background:#fff; height:calc(5px + var(--amp,.4) * 20px * var(--k,1)); transition:height .08s; }
+#mascot .wave i:nth-child(1){--k:.45} #mascot .wave i:nth-child(2){--k:.8} #mascot .wave i:nth-child(3){--k:1} #mascot .wave i:nth-child(4){--k:.7} #mascot .wave i:nth-child(5){--k:.95} #mascot .wave i:nth-child(6){--k:.6} #mascot .wave i:nth-child(7){--k:.35}
+#mascot .vstate { font-size:15px; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* states: the pill itself becomes the voice bar (QR half folds away) */
+#vbar:has(#mascot.listen), #vbar:has(#mascot.think), #vbar:has(#mascot.talk) { width:min(380px, calc(100vw - 32px)); }
+#vbar:has(#mascot.listen) #scanqr, #vbar:has(#mascot.think) #scanqr, #vbar:has(#mascot.talk) #scanqr { max-width:0; padding:0; opacity:0; }
+#vbar:has(#mascot.listen) .vsep, #vbar:has(#mascot.think) .vsep, #vbar:has(#mascot.talk) .vsep { opacity:0; width:0; }
+#mascot.listen .wm, #mascot.think .wm, #mascot.talk .wm { display:none; }
+#mascot.listen .wave, #mascot.talk .wave { display:flex; }
+#mascot.listen .vstate, #mascot.think .vstate, #mascot.talk .vstate { display:block; flex:1; }
+#mascot.listen .vstate::before { content:"Listening… boliye"; } #mascot.think .vstate::before { content:"Checking with your bank & apps…"; } #mascot.talk .vstate::before { content:"Bolo"; }
+#mascot.listen .wave i { animation:wv .9s ease-in-out infinite alternate; } #mascot.listen .wave i:nth-child(odd) { animation-delay:.25s; }
+@keyframes wv { from { height:5px; } to { height:calc(8px + 16px * var(--k)); } }
+#mascot.listen .glyph { animation:gp 1.2s ease-in-out infinite; } @keyframes gp { 50% { transform:scale(1.12); } }
+#mascot.think::after { content:""; position:absolute; inset:0; background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.18) 50%,transparent 70%); background-size:220% 100%; animation:sh 1.3s linear infinite; }
+@keyframes sh { from { background-position:120% 0; } to { background-position:-120% 0; } }
+#mascot.listen::before { content:""; position:absolute; right:16px; width:10px; height:10px; border-radius:50%; background:#FF5A5F; box-shadow:0 0 0 0 rgba(255,90,95,.6); animation:rec 1.2s infinite; }
+@keyframes rec { 70% { box-shadow:0 0 0 8px rgba(255,90,95,0); } }
+
+/* sub-screens: QR is hidden by app.js, so the bar docks as a native bottom strip with an "Ask Bolo" field (space reserved, nothing underneath) */
+#vbar:has(#scanqr[hidden]) { left:0; right:0; margin:0 auto; transform:none; bottom:0; width:min(100%,480px); height:calc(72px + env(safe-area-inset-bottom)); border-radius:0; border:0; border-top:1px solid var(--line);
+  background:#fff; box-shadow:0 -6px 18px rgba(0,0,0,.04); padding:10px 16px calc(10px + env(safe-area-inset-bottom)); color:var(--ink); }
+#vbar:has(#scanqr[hidden]) .vsep { display:none; }
+#vbar:has(#scanqr[hidden]) #mascot { height:52px; border-radius:99px; background:#F5F7FA; border:1px solid #DCE1E8; padding:0 8px 0 12px; }
+#vbar:has(#scanqr[hidden]) #mascot .wm { display:none; }
+#vbar:has(#scanqr[hidden]) #mascot:not(.listen):not(.think):not(.talk) .hint { display:block; flex:1; color:var(--muted); font-size:15px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+#vbar:has(#scanqr[hidden]) #mascot .mic { display:block; flex:none; width:38px; height:38px; padding:8px; border-radius:50%; background:var(--cta); color:#fff; }
+#vbar:has(#scanqr[hidden]) #mascot .wave i { background:var(--cta); }
+#vbar:has(#scanqr[hidden]) #mascot.think::after { background-image:linear-gradient(100deg,transparent 30%,rgba(0,66,153,.08) 50%,transparent 70%); border-radius:99px; }
+
+/* ---------- the reply panel: a native white card that rises out of the bar ---------- */
+#saathi { position:fixed; left:0; right:0; margin:0 auto; width:min(100%,480px); bottom:calc(82px + env(safe-area-inset-bottom)); z-index:9; display:block; padding:0 12px; pointer-events:none; }
+body:not(.s-home) #saathi { bottom:calc(80px + env(safe-area-inset-bottom)); }
+#bubble { pointer-events:auto; width:auto; background:#fff; border-radius:16px; padding:12px 16px 14px; box-shadow:0 2px 6px rgba(0,0,0,.06), 0 12px 28px rgba(0,0,0,.10); border:0; font-size:16px; color:var(--ink);
+  animation:rise .32s cubic-bezier(.2,.9,.3,1); transform-origin:50% 100%; }
+@keyframes rise { from { transform:translateY(24px) scale(.96); opacity:0; } 60% { opacity:1; } }
+#bubble::after { display:none; }
+.bhead { display:flex; align-items:center; gap:6px; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+.bhead span { flex:1; }
+#bclose { position:static; width:28px; height:28px; border-radius:50%; color:#9AA0A8; font-size:20px; line-height:1; }
+#heard { color:var(--muted); font-size:14px; margin-bottom:4px; }
+#said { font-size:16px; line-height:1.45; font-weight:500; }
+.bolo-name { display:none; }
+#kbd { margin-top:8px; padding:0; color:var(--cta); font-weight:600; font-size:14px; }
+#typed input { border-radius:99px; border:1px solid #DCE1E8; background:#F5F7FA; padding:10px 14px; }
+#typed button { border-radius:50%; width:42px; height:42px; background:var(--cta); display:grid; place-items:center; }
+
+/* ---------- inline answers: Paytm's own card language, no tint, no blob ---------- */
+body { background:var(--bg); }
+.bolo-card { background:#fff; border:0; border-radius:16px; padding:16px; box-shadow:none; margin:0 0 12px; }
+.bolo-card.flash { animation:cardin .45s cubic-bezier(.2,.9,.3,1); }
+@keyframes cardin { from { transform:translateY(8px); opacity:0; } }
+.bolo-tag { color:var(--muted); font-size:12px; font-weight:600; letter-spacing:0; text-transform:none; gap:6px; margin-bottom:8px; }
+.bolo-tag::after { content:"· for you"; font-weight:500; }
+.mini-bolo { width:18px; height:18px; border-radius:0; box-shadow:none; background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 28 28'%3E%3Cpath d='M14 2.5c6.6 0 11.5 4.6 11.5 10.6S20.6 23.7 14 23.7c-1.3 0-2.6-.2-3.8-.5L5 25.6l1.3-4.6C4 19 2.5 16.2 2.5 13.1 2.5 7.1 7.4 2.5 14 2.5z' fill='%2300BAF2'/%3E%3Crect x='8.6' y='10.4' width='2.4' height='5.4' rx='1.2' fill='%23fff'/%3E%3Crect x='12.8' y='7.8' width='2.4' height='10.6' rx='1.2' fill='%23fff'/%3E%3Crect x='17' y='10.4' width='2.4' height='5.4' rx='1.2' fill='%23fff'/%3E%3C/svg%3E") center/contain no-repeat; }
+.bolo-card h3 { color:var(--ink); font-size:17px; font-weight:600; letter-spacing:-.01em; margin:0 0 10px; }
+.bolo-card b { font-weight:600; }
+.fsum { display:inline-block; font-size:12px; font-weight:600; border-radius:6px; padding:3px 8px; background:var(--badbg); color:var(--bad); }
+.fsum.good { background:var(--okbg); color:var(--ok); }
+.factor { border-bottom:1px solid var(--line); padding:12px 0; }
+.factor .mark { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; flex:none; font-size:11px; font-weight:700; border:1.5px solid var(--bad); color:var(--bad); background:#fff; }
+.factor.ok .mark { border-color:var(--ok); color:#fff; background:var(--ok); } .factor.prog .mark { border-color:var(--warn); color:var(--warn); }
+.factor .pill { border-radius:6px; font-size:12px; font-weight:600; padding:2px 8px; }
+.pill.wait { background:var(--warnbg); color:var(--warn); } .pill.ok { background:var(--okbg); color:var(--ok); } .pill.bad { background:var(--badbg); color:var(--bad); }
+.step { border-bottom:1px solid var(--line); padding:12px 0; }
+.step .tick { width:22px; height:22px; border-radius:6px; border:1.5px solid #B9C2CF; }
+.step.done .tick { background:var(--cta); border-color:var(--cta); }
+.btn { background:var(--cta); border-radius:99px; font-weight:600; padding:15px; }
+.btn.ghost { background:var(--info); color:var(--cta); }
+.tl > div::before { background:var(--cta) !important; }
+.warn2 { background:var(--warnbg); color:var(--warn); border-radius:12px; border:0; }
+.pickbolo { background:#fff; color:var(--navy); border-radius:6px; font-weight:600; box-shadow:0 1px 3px rgba(0,0,0,.15); }
+.pickbolo .mini-bolo { width:14px; height:14px; }
+.banner { background:var(--okbg); color:var(--ok); border:0; border-radius:12px; font-weight:600; }
+
+/* ---------- confirm + PIN: Paytm bottom-sheet anatomy ---------- */
+#confirm, #pin { background:rgba(0,0,0,.45); }
+.sheet { border-radius:24px 24px 0 0; padding:10px 20px calc(20px + env(safe-area-inset-bottom)); animation:sheet .34s cubic-bezier(.2,.9,.3,1); }
+@keyframes sheet { from { transform:translateY(100%); } }
+.handle { width:40px; height:4px; border-radius:2px; background:#D5DAE1; margin:0 auto 16px; }
+.ctitle { color:var(--ink); font-size:19px; font-weight:600; margin:0 0 12px; }
+.ctitle .demo { font-size:11px; font-weight:600; color:var(--warn); background:var(--warnbg); border-radius:6px; padding:2px 6px; vertical-align:3px; }
+#cwhat, #pinwhat { font-size:17px; font-weight:600; color:var(--ink); background:#F5F7FA; border-radius:12px; padding:14px 16px; line-height:1.4; }
+.cinfo { display:flex; gap:8px; align-items:flex-start; color:var(--muted); font-size:13px; line-height:1.4; margin:12px 2px 16px; }
+.cinfo svg { flex:none; margin-top:1px; }
+.cbtns { display:flex; flex-direction:column; gap:6px; }
+#cyes, #pad .paynow { display:flex; align-items:center; justify-content:center; gap:8px; width:100%; height:54px; border-radius:99px; background:var(--cta); color:#fff; font-size:17px; font-weight:600; }
+#cno { height:44px; color:var(--cta); font-weight:600; font-size:16px; background:none; }
+.bankrow { display:flex; align-items:center; gap:12px; border:1px solid var(--line); border-radius:12px; padding:12px 14px; margin-top:12px; }
+.bankrow .bk { width:36px; height:36px; border-radius:50%; background:#E8EEF9; color:#1C3F94; font-size:10px; font-weight:800; display:grid; place-items:center; }
+.bankrow div { flex:1; } .bankrow small { display:block; color:var(--muted); font-size:13px; }
+.bankrow .chk { width:22px; height:22px; border-radius:50%; background:var(--cta); color:#fff; display:grid; place-items:center; font-size:12px; }
+#vbar #mascot.listen::after { display:none; }
+#vbar #mascot.listen::before { inset:auto; top:calc(50% - 5px); border:0; transform:none; }
+#confirm .ctitle::before { display:none; }
+#vbar { width:auto; } #vbar #scanqr { padding:0 12px 0 20px; font-size:17px; } #vbar #mascot { flex:none; padding:0 18px 0 12px; }
+#vbar:has(#mascot.listen) #mascot, #vbar:has(#mascot.think) #mascot, #vbar:has(#mascot.talk) #mascot, #vbar:has(#scanqr[hidden]) #mascot { flex:1; }
+/* while the reply panel is open, the page reserves its height too, so every card can still be scrolled clear of it */
+#app { padding-bottom:calc(104px + var(--panel, 0px)) !important; }
+#pad { display:block; }
+#vbar:has(#scanqr[hidden]) #mascot { flex:1 1 auto; width:100%; }
+#vbar #scanqr[hidden] { display:none; }
+#vbar:has(#scanqr[hidden]) #mascot.listen::before { display:none; }

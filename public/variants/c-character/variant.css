@@ -1,0 +1,152 @@
+/* Variant C "Character": Bolo is a full character that walks to the card she is talking about.
+   Colours sampled from Udit's real Paytm screenshots: bg #F5F5F7, CTA #004299, ink #292929, muted #727580, chip #DEEDFF. */
+:root { --navy:#002E6E; --sky:#00BAF2; --cta:#004299; --ink:#292929; --muted:#727580; --bg:#F5F5F7; }
+html, body { font-family:Inter, -apple-system, "Segoe UI", Roboto, sans-serif; }
+
+/* ---------- the character ---------- */
+#saathi { right:max(12px, calc(50% - 228px)); bottom:92px; animation:enter .9s cubic-bezier(.3,1.5,.5,1) both .2s; }
+@keyframes enter { from { transform:translateX(160px) rotate(12deg); } to { transform:none; } }
+#mascot { width:92px; height:100px; animation:none; filter:drop-shadow(0 8px 12px rgba(0,46,110,.28)); transition:transform .7s cubic-bezier(.3,1.35,.5,1); z-index:2; }
+#mascot svg { overflow:visible; }
+.bolo .rig { transform-origin:60px 122px; animation:bob 2.6s ease-in-out infinite; }
+@keyframes bob { 50% { transform:translateY(-5px) rotate(-2deg); } }
+.bolo .eyes { transform-origin:60px 60px; animation:blink 4.2s infinite; }
+.bolo .pupils { transition:transform .3s; }
+.bolo .coin { transform-origin:65px 6px; animation:coin 2.4s ease-in-out infinite; }
+@keyframes coin { 50% { transform:scaleX(.2); } }
+.bolo .arm-r { transform-origin:98px 76px; animation:wave 2.6s ease-in-out infinite; }
+@keyframes wave { 0%,60%,100% { transform:rotate(0); } 70% { transform:rotate(-18deg); } 80% { transform:rotate(6deg); } 90% { transform:rotate(-12deg); } }
+.bolo .arm-l { transform-origin:22px 78px; transform:rotate(-40deg) translate(6px,-4px); transition:transform .5s cubic-bezier(.3,1.5,.5,1); }
+.bolo .finger { opacity:0; transition:opacity .2s; }
+.bolo .headset, .bolo .dots, .bolo .eyes-happy, .bolo .m-grin, .bolo .m-frown, .bolo .m-open, .bolo .brows { opacity:0; transition:opacity .2s; }
+.bolo .dots circle { fill:#fff; stroke:#00BAF2; stroke-width:2; }
+.bolo .brows path { transition:transform .25s; transform-box:fill-box; transform-origin:center; }
+
+/* listening: headset on, leans in, rings */
+#mascot.listen { transform:none; }
+#mascot.listen .headset { opacity:1; }
+#mascot.listen .rig { animation:lean 1.2s ease-in-out infinite; }
+@keyframes lean { 50% { transform:rotate(-5deg) translateX(-3px); } }
+#mascot.listen .pupils { transform:translate(-2px,-3px); }
+#mascot.listen::before, #mascot.listen::after { inset:6px 4px 10px; border-color:#00BAF2; }
+/* thinking: dots, raised brow, eyes up */
+#mascot.think .dots { opacity:1; }
+#mascot.think .dots circle { animation:dot 1.1s ease-in-out infinite; }
+#mascot.think .dots circle:nth-child(2) { animation-delay:.15s; } #mascot.think .dots circle:nth-child(3) { animation-delay:.3s; }
+@keyframes dot { 50% { transform:translateY(-4px); } }
+#mascot.think .brows { opacity:1; } #mascot.think .br { transform:translateY(-4px) rotate(-8deg); }
+#mascot.think .pupils { animation:look 1.2s ease-in-out infinite alternate; }
+/* speaking: open mouth scaled by live audio amplitude (--amp set from an AnalyserNode) */
+#mascot.talk .m-smile { opacity:0; }
+#mascot.talk .m-open { opacity:1; transform-box:fill-box; transform-origin:center top; transform:scaleY(calc(.25 + var(--amp, .5) * 1.1)) scaleX(calc(.9 + var(--amp, .5) * .35)); }
+#mascot.talk:not(.lips) .m-open { animation:talk .2s ease-in-out infinite alternate; }
+@keyframes talk { from { transform:scaleY(.3); } to { transform:scaleY(1.2); } }
+/* happy: ^ ^ eyes, grin, jump */
+#mascot.happy .eyes, #mascot.sad .m-smile, #mascot.happy .m-smile, #mascot.happy .m-open { opacity:0; }
+#mascot.happy .eyes-happy, #mascot.happy .m-grin { opacity:1; }
+#mascot.happy .rig { animation:jump .55s cubic-bezier(.3,1.6,.5,1) 3; }
+#mascot.happy .arm-l { transform:rotate(-120deg) translate(0,-6px); } #mascot.happy .arm-r { animation:none; transform:rotate(-40deg); }
+@keyframes jump { 0%,100% { transform:none; } 40% { transform:translateY(-22px) scale(1.04,.96); } 70% { transform:translateY(0) scale(1.08,.9); } }
+/* concerned: worried brows, frown, small droop, desaturated */
+#mascot.sad .m-frown, #mascot.sad .brows { opacity:1; }
+#mascot.sad .bl { transform:translateY(2px) rotate(18deg); } #mascot.sad .br { transform:translateY(2px) rotate(-18deg); }
+#mascot.sad .pupils { transform:translateY(3px); }
+#mascot.sad .rig { animation:droop 3s ease-in-out infinite; filter:saturate(.75); }
+#mascot.sad .arm-r { animation:none; transform:rotate(30deg); }
+@keyframes droop { 50% { transform:translateY(3px) rotate(2deg); } }
+#mascot.sad.talk .m-frown { opacity:0; }
+/* pointing: the left arm aims at the card */
+#mascot.point .arm-l { transform:rotate(8deg); } #mascot.point .finger { opacity:1; }
+#mascot.point .pupils { transform:translate(-4px,1px); }
+
+/* ---------- speech bubble ---------- */
+#bubble { position:relative; width:min(300px, calc(100vw - 40px)); border-radius:22px 22px 6px 22px; padding:14px 16px 12px; font-size:16px; line-height:1.4; color:var(--ink);
+  box-shadow:0 1px 0 rgba(0,46,110,.06), 0 12px 32px rgba(0,46,110,.18); border:1.5px solid #CFEAFB; animation:pop .35s cubic-bezier(.3,1.5,.5,1); transform-origin:100% 100%; }
+#bubble::after { content:""; position:absolute; right:26px; bottom:-9px; width:16px; height:16px; background:#fff; border-right:1.5px solid #CFEAFB; border-bottom:1.5px solid #CFEAFB; transform:rotate(45deg); border-radius:0 0 4px 0; }
+@keyframes pop { from { transform:scale(.6); opacity:0; } }
+#bclose { position:absolute; top:6px; right:8px; width:28px; height:28px; border-radius:50%; color:#9AA3AE; font-size:20px; }
+#heard { color:var(--muted); font-size:14px; padding-right:24px; }
+#said { font-weight:500; padding-right:14px; }
+.bolo-name { color:#0B63C9; font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+#kbd { color:#0B63C9; font-weight:600; font-size:14px; margin-top:8px; padding:0; }
+#typed input { border-radius:99px; padding:10px 14px; border-color:#CFEAFB; }
+#typed button { border-radius:99px; width:42px; background:var(--cta); }
+
+/* ---------- result cards = speech-bubble attachments from Bolo ---------- */
+.bolo-card { background:#fff; border:1.5px solid #CFEAFB; border-radius:22px; padding:16px 16px 14px; position:relative; box-shadow:0 6px 18px rgba(0,46,110,.08); }
+.bolo-card.flash, .bolo-card.pointed { animation:attach .55s cubic-bezier(.3,1.4,.5,1) both; transform-origin:92% 0; }
+@keyframes attach { from { transform:scale(.7) translateY(-10px); opacity:0; } }
+.bolo-card.pointed { border-color:#7FD6F7; box-shadow:0 0 0 4px rgba(0,186,242,.12), 0 8px 22px rgba(0,46,110,.12); }
+.bolo-card.pointed::before { content:""; position:absolute; top:-9px; right:26px; width:16px; height:16px; background:#fff; border-left:1.5px solid #7FD6F7; border-top:1.5px solid #7FD6F7; transform:rotate(45deg); border-radius:4px 0 0 0; }
+.bolo-card.bounce { animation:bounce .6s cubic-bezier(.3,1.6,.5,1); }
+@keyframes bounce { 30% { transform:scale(1.03) translateY(-4px); } 60% { transform:scale(.99); } }
+.bolo-tag { color:#0B63C9; font-size:12px; letter-spacing:.06em; text-transform:uppercase; gap:8px; }
+.mini-bolo { width:22px; height:22px; border-radius:50% 50% 46% 46%; background:#00BAF2 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Cellipse cx='8' cy='10' rx='2.6' ry='3.2' fill='%23fff'/%3E%3Cellipse cx='14' cy='10' rx='2.6' ry='3.2' fill='%23fff'/%3E%3Ccircle cx='8.3' cy='10.6' r='1.6' fill='%23002E6E'/%3E%3Ccircle cx='14.3' cy='10.6' r='1.6' fill='%23002E6E'/%3E%3Cpath d='M8.5 15q2.5 2 5 0' stroke='%23002E6E' stroke-width='1.3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") center/100%; box-shadow:inset 0 -3px 0 rgba(11,99,201,.35); }
+.bolo-card h3 { color:var(--ink); font-size:18px; letter-spacing:-.01em; }
+.factor { border-bottom:1px solid #EEF1F5; }
+.factor .mark { width:26px; height:26px; border-radius:50%; display:grid; place-items:center; flex:none; font-size:13px; font-weight:800; color:#fff; background:#E5484D; }
+.factor.ok .mark { background:#21A04B; } .factor.prog .mark { background:#F2A008; }
+.step .tick { border-color:#B8D9F5; }
+.step.done .tick { background:#00BAF2; border-color:#00BAF2; animation:tick .5s cubic-bezier(.3,1.6,.5,1); }
+@keyframes tick { from { transform:scale(.3) rotate(-90deg); } }
+.btn { background:var(--cta); border-radius:99px; }
+.btn.ghost { background:#DEEDFF; color:var(--cta); }
+.pickbolo { background:#fff; color:var(--navy); border:1.5px solid #7FD6F7; border-radius:99px; box-shadow:0 4px 12px rgba(0,46,110,.15); }
+
+/* ---------- confetti-lite ---------- */
+#confetti { position:fixed; inset:0; pointer-events:none; z-index:40; overflow:hidden; }
+#confetti i { position:absolute; width:8px; height:12px; border-radius:2px; animation:conf 1.4s cubic-bezier(.2,.7,.4,1) forwards; }
+#confetti i.r { border-radius:50%; width:9px; height:9px; }
+@keyframes conf { 0% { transform:translate(0,0) rotate(0); opacity:1; } 100% { transform:translate(var(--x), var(--y)) rotate(var(--r)); opacity:0; } }
+
+/* ---------- confirm + PIN sheets: Bolo peeks over the edge ---------- */
+#confirm, #pin { background:rgba(0,30,70,.42); backdrop-filter:blur(2px); }
+.sheet { position:relative; border-radius:28px 28px 0 0; padding:26px 20px calc(22px + env(safe-area-inset-bottom)); animation:up .4s cubic-bezier(.3,1.25,.5,1); }
+@keyframes up { from { transform:translateY(100%); } }
+.sheet .peek { position:absolute; width:120px; height:56px; top:-50px; left:50%; margin-left:-60px; animation:peek .6s cubic-bezier(.3,1.6,.5,1) .25s both; }
+@keyframes peek { from { transform:translateY(40px); } }
+.ctitle { color:var(--ink); font-size:20px; font-weight:800; text-align:center; margin:6px 0 10px; }
+.ctitle .demo { font-size:11px; font-weight:700; color:#B26A00; background:#FFF3DA; border-radius:6px; padding:2px 6px; vertical-align:3px; }
+#cwhat, #pinwhat { text-align:center; font-size:17px; font-weight:600; color:var(--navy); background:#F0F8FE; border:1.5px dashed #9FD8F5; border-radius:16px; padding:14px; }
+.cnote { text-align:center; color:var(--muted); font-size:13px; margin:12px 0 14px; }
+.cbtns { display:flex; gap:12px; }
+.cbtns button { flex:1; padding:15px; border-radius:99px; font-weight:700; font-size:17px; }
+#cno { background:#fff; color:var(--cta); border:1.5px solid #C9D6EA; }
+#cyes { background:var(--cta); color:#fff; box-shadow:0 6px 16px rgba(0,66,153,.3); }
+#pad .paynow { width:100%; padding:16px; border-radius:99px; background:var(--cta); color:#fff; font-weight:700; font-size:18px; }
+
+/* ---------- placement: Bolo never sits on content ----------
+   Home rule: Bolo stands in his own bottom "stage" (a reserved 84px strip, like a native bottom bar) to the right of Scan QR.
+   #app gets matching bottom padding, so every tile/amount/button can scroll fully above it.
+   Pointing rule: when Bolo talks about a card, the card opens a 64px "perch" gap above itself and Bolo walks into that gap. */
+#app { padding-bottom:110px !important; }
+#stage { position:fixed; left:50%; transform:translateX(-50%); bottom:0; width:min(100%, 480px); height:calc(84px + env(safe-area-inset-bottom)); z-index:6;
+  background:rgba(255,255,255,.96); backdrop-filter:blur(10px); border-radius:22px 22px 0 0; box-shadow:0 -1px 0 #E8EBF0, 0 -8px 24px rgba(0,46,110,.06); }
+#scanqr { bottom:calc(16px + env(safe-area-inset-bottom)); left:calc(50% - 28px); z-index:7; padding:13px 26px; font-size:18px; }
+#askchip { position:fixed; z-index:7; bottom:calc(18px + env(safe-area-inset-bottom)); left:max(16px, calc(50% - 224px)); right:max(100px, calc(50% - 140px)); height:48px; border-radius:99px;
+  background:#F0F6FD; border:1.5px solid #D5E6F8; color:var(--navy); font-weight:600; font-size:15px; text-align:left; padding:0 18px; }
+#askchip span { color:var(--muted); font-weight:500; }
+body.s-home #askchip { display:none; }
+#saathi { bottom:calc(8px + env(safe-area-inset-bottom)); right:max(10px, calc(50% - 230px)); z-index:21; }
+#mascot { width:70px; height:76px; }
+#bubble { margin-bottom:6px; transform-origin:88% 100%; }
+#bubble::after { right:22px; }
+/* away = Bolo has walked up to a card; the stage keeps a soft footprint where he stood */
+#saathi.away #bubble::after { display:none; }
+.bolo-card.pointed { transition:margin-top .3s ease; }
+#saathi.away { position:absolute; right:auto; bottom:auto; flex-direction:row; align-items:flex-end; gap:4px; animation:walkin .6s cubic-bezier(.3,1.4,.5,1) both; z-index:4; }
+@keyframes walkin { from { transform:translateX(60px); opacity:0; } }
+#saathi.away #bubble { flex:1; width:auto; margin:0 0 14px; border-radius:20px 20px 6px 20px; font-size:15px; padding:10px 14px; box-shadow:0 4px 14px rgba(0,46,110,.10); }
+#saathi.away #bubble::after { display:block; right:-7px; left:auto; bottom:12px; transform:rotate(-45deg); }
+#saathi.away #heard { font-size:13px; }
+#saathi.away #kbd { display:none; }
+#saathi.away #mascot { width:64px; height:70px; flex:none; }
+#mascot.perched { filter:drop-shadow(0 6px 8px rgba(0,46,110,.22)); }
+/* popup open sequence (frames shown on the contact sheet): bubble scales from Bolo's mouth corner, text fades after */
+#said, #heard { animation:txt .35s ease .12s both; }
+@keyframes txt { from { opacity:0; transform:translateY(4px); } }
+#bubble.closing { animation:close .22s ease-in forwards; }
+@keyframes close { to { transform:scale(.5); opacity:0; } }
+#confirm .ctitle::before { display:none; }
+.ctitle { justify-content:center; }
+#app { padding-bottom:calc(110px + var(--panel, 0px)) !important; }

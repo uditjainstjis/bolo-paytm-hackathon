@@ -1,0 +1,9 @@
+{
+  "name": "Paytm Saathi (concept)",
+  "short_name": "Paytm",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
